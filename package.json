@@ -1,0 +1,28 @@
+{
+  "name": "timetable_of_work",
+  "version": "1.0.0",
+  "description": "",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivan-olesko-JS20/timetable_of_work.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivan-olesko-JS20/timetable_of_work/issues"
+  },
+  "homepage": "https://github.com/ivan-olesko-JS20/timetable_of_work#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "handlebars": "^4.7.6",
+    "hbs": "^4.1.1",
+    "mongoose": "^5.10.0",
+    "nodemon": "^2.0.4"
+  }
+}
