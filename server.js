@@ -38,7 +38,6 @@ app.post('/admin', async (req, res) => {
     if (findUser.password === password) {
       req.session.user = findUser;
       const users = await User.find();
-      console.log(users);
       res.render('mainscreen', { users });
     }
   } else {
@@ -46,7 +45,9 @@ app.post('/admin', async (req, res) => {
   }
 });
 
+// app.get('/user/:id'), (res, req) => {
 
+// });
 
 
 app.listen(3333, () => {
