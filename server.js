@@ -27,7 +27,6 @@ app.listen(3333, () => {
   console.log('work 3333');
 })
 
-module.exports = app
 
 
 
