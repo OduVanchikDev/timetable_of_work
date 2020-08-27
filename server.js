@@ -23,27 +23,40 @@ app.use(session({ //библиотека express-session - мидлвер для
   secret: 'dfgiodhgosjgopsjgpowejf345345',
   resave: false,
   saveUninitialized: false,
-  cookie: { expires: 6000000 }
+  cookie: { expires: 6000000 },
 }));
 
-
-const server = app.listen(3333, () => {
-  console.log('work 3333');
-})
+function checkSession(req, res, next) {
+  if (req.session.user) {
+    next();
+  } else {
+    res.render('signin');
+  }
+}
 
 app.get('/', (req, res) => {
   res.render('signin');
 });
 
-app.post('/admin', async (req, res) => {
+app.get('/user/new', (req, res) => {
+  res.render('createPersonal');
+});
+
+app.get('/user/:id', checkSession, async (req, res) => {
+  const { id } = req.params;
+  const users = await User.find();
+  const person = await User.findOne({ _id: id });
+  res.render('mainscreen', { users, person });
+});
+
+app.post('/user', async (req, res) => {
   const { email, password } = req.body;
   const findUser = await User.findOne({ email });
   if (findUser) {
     if (findUser.password === password) {
+      const { id } = findUser;
       req.session.user = findUser;
-      const users = await User.find();
-      console.log(users);
-      res.render('mainscreen', { users });
+      res.redirect(`/user/${id}`);
     }
   } else {
     res.redirect('/');
@@ -51,44 +64,39 @@ app.post('/admin', async (req, res) => {
 });
 
 
+app.post('/user/new', async (req, res) => {
+  const {
+    role, userName, email, password,
+  } = req.body;
+  await User.insertMany({
+    role,
+    userName,
+    email,
+    password,
+  });
+  res.redirect('/');
+});
+
+const server = app.listen(3333, () => {
+  console.log('work 3333');
+})
+
 const io = require("socket.io")(server);
 
 io.on('connection', (socket) => {
-	console.log('New user connected')
+  console.log('New user connected')
 
-	socket.username = "Anonymous"
+  socket.username = "Anonymous"
 
-    socket.on('change_username', (data) => {
-  
-        socket.username = data.username
-    })
+  socket.on('change_username', (data) => {
+    socket.username = data.username
+  })
 
-    socket.on('new_message', (data) => {
-    
-        io.sockets.emit('add_mess', {message : data.message, username : socket.username, className:data.className});
-    })
+  socket.on('new_message', (data) => {
+    io.sockets.emit('add_mess', { message: data.message, username: socket.username, className: data.className });
+  })
 
-    socket.on('typing', (data) => {
-      
-    	socket.broadcast.emit('typing', {username : socket.username})
-    })
+  socket.on('typing', (data) => {
+    socket.broadcast.emit('typing', { username: socket.username })
+  })
 })
-
-
-
-// users =[]
-// connections = []
-
-// io.sockets.on('connection', function(socket){
-//   console.log('Успешное соединение')
-//   connections.push(socket);
-
-//   socket.on('disconnect', function(data){
-//     connections.splice(connections.indexOf(socket),1)
-//   console.log('Отключились')
-//   })
-
-//   socket.on('send mess', function(data){
-//     io.sockets.emit('add mess', {mess: data.mess,name: data.name})
-//   })
-// })
