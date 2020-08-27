@@ -46,28 +46,31 @@ app.get('/user/:id', checkSession, async (req, res) => {
 });
 
 app.post('/user', async (req, res) => {
-  const { email, password } = req.body;
+  const { role, email, password } = req.body;
   const findUser = await User.findOne({ email });
   if (findUser) {
-    if (findUser.password === password) {
+    if (findUser.password === password && findUser.role === role) {
       const { id } = findUser;
       req.session.user = findUser;
       res.redirect(`/user/${id}`);
+    } else {
+      res.render('signin', { message: 'Неправильно выбрана роль или пароль!!!!!!' });
     }
   } else {
-    res.redirect('/');
+    res.render('signin', { message: 'Неправильно введен логин или пароль!!!!!!' });
   }
 });
 
 
 app.post('/user/new', async (req, res) => {
   const {
-    role, userName, email, password,
+    role, userName, email, profession, password,
   } = req.body;
   await User.insertMany({
     role,
     userName,
     email,
+    profession,
     password,
   });
   res.redirect('/');
@@ -75,5 +78,4 @@ app.post('/user/new', async (req, res) => {
 
 app.listen(3333, () => {
   console.log('work 3333');
-})
-
+});
