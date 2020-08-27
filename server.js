@@ -1,8 +1,8 @@
 const express = require('express')
+
 const app = express()
 
 const mongoose = require("mongoose");
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const db = require('./db');
 const User = require('./models/user');
@@ -22,13 +22,19 @@ app.use(session({ //библиотека express-session - мидлвер для
   cookie: { expires: 6000000 },
 }));
 
-function checkSession(req, res, next) {
-  if (req.session.user) {
-    next();
-  } else {
-    res.render('signin');
-  }
-}
+// <<<<<<< design
+// app.listen(3333, () => {
+//   console.log('work 3333');
+// })
+// =======
+// function checkSession(req, res, next) {
+//   if (req.session.user) {
+//     next();
+//   } else {
+//     res.render('signin');
+//   }
+// }
+// >>>>>>> dev
 
 app.get('/', (req, res) => {
   res.render('signin');
@@ -76,6 +82,3 @@ app.post('/user/new', async (req, res) => {
   res.redirect('/');
 });
 
-app.listen(3333, () => {
-  console.log('work 3333');
-});

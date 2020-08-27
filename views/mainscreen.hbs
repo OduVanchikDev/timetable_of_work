@@ -1,8 +1,13 @@
-<div id="right_side">
+
+<div class="header">
+  <h3>Менеджер персонала</h3>
+</div>
+
+<div class="box_filter">
   <form action="/user/new" method="get">
-    <button>Новый сотрудник</button>
+     <button id="new_person">Новый сотрудник</button>
   </form>
-  <label for="">Фильтр</label>
+
   <select>
     <option value="Повара">Повара</option>
     <option value="Официанты">Официанты</option>
@@ -14,8 +19,8 @@
     {{/each}}
   </ul>
 </div>
-<div id="left_side">
-  <div id="toolbar">
+
+<div class="changer">
     <label for="">Месяц</label>
     <select>
       <option value="Повара">Январь</option>
@@ -33,3 +38,4 @@
   </div>
 
 </div>
+
