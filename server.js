@@ -1,5 +1,6 @@
 const express = require('express')
 const app = express()
+const session = require('express-session')
 
 const mongoose = require("mongoose");
 const path = require('path');
@@ -8,14 +9,13 @@ const session = require('express-session');
 const db = require('./db');
 const User = require('./models/user');
 
-app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public'));
 
 app.use(session({ //библиотека express-session - мидлвер для сессий
   secret: 'dfgiodhgosjgopsjgpowejf345345',
@@ -25,7 +25,9 @@ app.use(session({ //библиотека express-session - мидлвер для
 }));
 
 
-module.exports = app
+app.listen(3333, () => {
+  console.log('work 3333');
+})
 
 app.get('/', (req, res) => {
   res.render('signin');
@@ -49,6 +51,3 @@ app.post('/admin', async (req, res) => {
 
 
 
-app.listen(3333, () => {
-  console.log('work 3333');
-})
