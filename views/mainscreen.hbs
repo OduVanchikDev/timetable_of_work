@@ -1,9 +1,13 @@
+
 <div class="header">
   <h3>Менеджер персонала</h3>
 </div>
 
 <div class="box_filter">
-  <button id="new_person">Новый сотрудник</button>
+  <form action="/user/new" method="get">
+     <button id="new_person">Новый сотрудник</button>
+  </form>
+
   <select>
     <option value="Повара">Повара</option>
     <option value="Официанты">Официанты</option>
@@ -15,22 +19,23 @@
     {{/each}}
   </ul>
 </div>
-<div class="changer">
-  <label for="">Месяц</label>
-  <select>
-    <option value="Повара">Январь</option>
-    <option value="Официанты">Февраль</option>
-    <option value="Кондитер">Март</option>
-  </select>
 
-  <label for="">Ресторан</label>
-  <select>
-    <option value="Повара">Ресторан-1</option>
-    <option value="Официанты">Ресторан-2</option>
-    <option value="Кондитер">Ресторан-3</option>
-  </select>
+<div class="changer">
+    <label for="">Месяц</label>
+    <select>
+      <option value="Повара">Январь</option>
+      <option value="Официанты">Февраль</option>
+      <option value="Кондитер">Март</option>
+    </select>
+
+    <label for="">Ресторан</label>
+    <select>
+      <option value="Повара">Ресторан-1</option>
+      <option value="Официанты">Ресторан-2</option>
+      <option value="Кондитер">Ресторан-3</option>
+    </select>
+    <button>{{this.person.userName}}</button>
+  </div>
+
 </div>
-{{!-- </div>
-<div class="container-fluid">
-  
-  </div> --}}
+

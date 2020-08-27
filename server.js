@@ -1,5 +1,5 @@
 const express = require('express')
-const session = require('express-session')
+
 const app = express()
 
 const mongoose = require("mongoose");
@@ -19,34 +19,66 @@ app.use(session({ //библиотека express-session - мидлвер для
   secret: 'dfgiodhgosjgopsjgpowejf345345',
   resave: false,
   saveUninitialized: false,
-  cookie: { expires: 6000000 }
+  cookie: { expires: 6000000 },
 }));
 
-app.listen(3333, () => {
-  console.log('work 3333');
-})
+// <<<<<<< design
+// app.listen(3333, () => {
+//   console.log('work 3333');
+// })
+// =======
+// function checkSession(req, res, next) {
+//   if (req.session.user) {
+//     next();
+//   } else {
+//     res.render('signin');
+//   }
+// }
+// >>>>>>> dev
 
 app.get('/', (req, res) => {
   res.render('signin');
 });
 
-app.post('/admin', async (req, res) => {
-  const { email, password } = req.body;
+app.get('/user/new', (req, res) => {
+  res.render('createPersonal');
+});
+
+app.get('/user/:id', checkSession, async (req, res) => {
+  const { id } = req.params;
+  const users = await User.find();
+  const person = await User.findOne({ _id: id });
+  res.render('mainscreen', { users, person });
+});
+
+app.post('/user', async (req, res) => {
+  const { role, email, password } = req.body;
   const findUser = await User.findOne({ email });
   if (findUser) {
-    if (findUser.password === password) {
+    if (findUser.password === password && findUser.role === role) {
+      const { id } = findUser;
       req.session.user = findUser;
-      const users = await User.find();
-      res.render('mainscreen', { users });
+      res.redirect(`/user/${id}`);
+    } else {
+      res.render('signin', { message: 'Неправильно выбрана роль или пароль!!!!!!' });
     }
   } else {
-    res.redirect('/');
+    res.render('signin', { message: 'Неправильно введен логин или пароль!!!!!!' });
   }
 });
 
-// app.get('/user/:id'), (res, req) => {
 
-// });
-
-
+app.post('/user/new', async (req, res) => {
+  const {
+    role, userName, email, profession, password,
+  } = req.body;
+  await User.insertMany({
+    role,
+    userName,
+    email,
+    profession,
+    password,
+  });
+  res.redirect('/');
+});
 

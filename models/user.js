@@ -19,9 +19,13 @@ const UserSchema = new Schema({
     type: String,
     required: true,
   },
-  date: [String],
+  action: [{
+    place: String,
+    date: String,
+  }],
   profession: String,
   working: { type: Boolean, default: false },
+  message: [String],
 });
 
 // const UserModel = mongoose.model('User', UserSchema);
