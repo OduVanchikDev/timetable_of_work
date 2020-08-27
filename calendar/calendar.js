@@ -1,4 +1,4 @@
-function createCalendar(id, year, month) {
+function createCalendar(id, year, month, arr) {
   var elem = document.getElementById(id);
 
   var mon = month - 1; // месяцы в JS идут от 0 до 11, а не от 1 до 12
@@ -18,7 +18,11 @@ function createCalendar(id, year, month) {
 
   // ячейки календаря с датами
   while (d.getMonth() == mon) {
-    table += '<td class="num" >' + d.getDate() + '</td>';
+
+    table += '<td class="num ' + (arr.includes(d.getDate()) ? 'disabled' : '') + '" >' + d.getDate() + '</td>';
+
+    //if они равны меняем класс
+
     count++
 
     // if (getDay(d) % 7 == 6) { // вс, последний день - перевод строки
@@ -27,6 +31,7 @@ function createCalendar(id, year, month) {
 
     d.setDate(d.getDate() + 1);
   }
+
   // добить таблицу пустыми ячейками, если нужно
   if (getDay(d) != 0) {
     for (var i = getDay(d); i < count; i++) {
@@ -40,6 +45,13 @@ function createCalendar(id, year, month) {
   // только одно присваивание innerHTML
   elem.innerHTML = table;
 }
+let green = document.getElementsByClassName('disabled')
+
+
+
+
+
+//green.forEach(el => el.style.background = 'green')
 
 function getDay(date) { // получить номер дня недели, от 0(пн) до 6(вс)
   var day = date.getDay();
@@ -48,7 +60,7 @@ function getDay(date) { // получить номер дня недели, от
 }
 
 
-createCalendar("calendar", 2012, 9)
+createCalendar("calendar", 2012, 9, [3, 5, 7, 9])
 
 
 
@@ -57,6 +69,9 @@ let arr = []
 let text = document.querySelectorAll('.num')
 text.forEach(el => el.addEventListener('click', (e) => {
 
+  if (e.target.classList.contains('disabled')) {
+    alert('нужно сформировать запрос на коллеге, эта дата занята')
+  }
   e.target.classList.toggle('green')
   //arr.push(Number(e.target.innerHTML))
 
@@ -70,19 +85,24 @@ text.forEach(el => el.addEventListener('click', (e) => {
 
 
 }))
+// не работает на getElementsByClassName
+
+let cd = document.querySelectorAll('.disabled')
+let as = [...cd];
+as.map(el => el.style.background === '' ? el.style.background = 'green' : '')
 
 let btn = document.getElementById('btn')
 btn.addEventListener('click', (e) => {
 
 
-  // +++______________+++вписать нужную ручку, на выходе массив чисел(даты) 
+  // +++______________+++вписать нужную ручку, на выходе массив чисел(даты) количество дней 
 
   //   fetch('/form', {
   //     method: 'POST',
   //     Headers: {
   //       'content-type': 'application/json'
   //     },
-  //     body: JSON.stringify(arr)
+  //     body: JSON.stringify({ arr:arr, count: count })
   //   })
   // })
 
