@@ -3,8 +3,11 @@ function createCalendar(id, year, month) {
 
   var mon = month - 1; // месяцы в JS идут от 0 до 11, а не от 1 до 12
   var d = new Date(year, mon);
+  let count = 0
 
-  var table = '<table><tr><th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th></tr><tr>';
+  let str = '<th>пн</th><th>вт</th><th>ср</th><th>чт</th><th>пт</th><th>сб</th><th>вс</th>'
+  let table = `<table><tr>${str.repeat(5)}</tr><tr></tr>`
+
 
   // заполнить первый ряд от понедельника
   // и до дня, с которого начинается месяц
@@ -16,17 +19,17 @@ function createCalendar(id, year, month) {
   // ячейки календаря с датами
   while (d.getMonth() == mon) {
     table += '<td class="num" >' + d.getDate() + '</td>';
+    count++
 
-    if (getDay(d) % 7 == 6) { // вс, последний день - перевод строки
-      table += '</tr><tr>';
-    }
+    // if (getDay(d) % 7 == 6) { // вс, последний день - перевод строки
+    //   table += '</tr><tr>';
+    // }
 
     d.setDate(d.getDate() + 1);
   }
-
   // добить таблицу пустыми ячейками, если нужно
   if (getDay(d) != 0) {
-    for (var i = getDay(d); i < 7; i++) {
+    for (var i = getDay(d); i < count; i++) {
       table += '<td></td>';
     }
   }
@@ -74,16 +77,16 @@ btn.addEventListener('click', (e) => {
 
   // +++______________+++вписать нужную ручку, на выходе массив чисел(даты) 
 
-  fetch('/form', {
-    method: 'POST',
-    Headers: {
-      'content-type': 'application/json'
-    },
-    body: JSON.stringify(arr)
-  })
+  //   fetch('/form', {
+  //     method: 'POST',
+  //     Headers: {
+  //       'content-type': 'application/json'
+  //     },
+  //     body: JSON.stringify(arr)
+  //   })
+  // })
+
+
 })
-
-
-
 
 
