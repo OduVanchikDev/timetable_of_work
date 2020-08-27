@@ -1,6 +1,26 @@
-<dev>
+<div>
   <h1>{{userName}}</h1>
   <p>{{role}}</p>
   <p>{{email}}</p>
   <p>{{password}}</p>
-</dev>
+
+  <form action="">
+    <select name="place" id="">
+      {{#each this.place}}
+      <option value="{{place}}">{{place}}</option>
+      {{/each}}
+    </select>
+
+    <select name="date" id="">
+      {{#each this.date}}
+      <option value="{{date}}">{{date}}</option>
+      {{/each}}
+    </select>
+
+    <select name="user" id="">
+      {{#each this.user}}
+      <option value="{{user}}">{{user}}</option>
+      {{/each}}
+    </select>
+  </form>
+</div>

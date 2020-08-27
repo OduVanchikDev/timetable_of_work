@@ -12,14 +12,17 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
   },
   password: {
     type: String,
     required: true,
   },
-  date: [String],
+  action: [{
+    place: String,
+    date: String,
+  }],
   profession: String,
   working: { type: Boolean, default: false },
 });
