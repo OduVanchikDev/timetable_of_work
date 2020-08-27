@@ -1,5 +1,5 @@
 $(function() {
-  let socket = io.connect("http://localhost:3000");
+  let socket = io.connect("http://localhost:3333");
 
   let username = $("#username");
   let send_message = $("#send_message");
@@ -58,6 +58,7 @@ $(function() {
 
   send_username.click(() => {
     socket.emit("change_username", { username: username.val() });
+    console.log( username.val() )
   });
 
   message.bind("keypress", () => {
