@@ -1,0 +1,19 @@
+<dev id="toolbar">
+
+</dev>
+<dev id="right_side">
+  <label for="">Фильтр</label>
+  <select>
+    <option value="Повара">Повара</option>
+    <option value="Официанты">Официанты</option>
+    <option value="Кондитер">Кондитер</option>
+  </select>
+  <ul id="users">
+    {{#each this.users}}
+    <li>{{userName}}</li>
+    {{/each}}
+  </ul>
+</dev>
+<dev id="left_side">
+
+</dev>
