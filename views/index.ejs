@@ -1,24 +1,15 @@
-<dev id="toolbar">
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" const="text/html;charset=UTF-8" />
+    <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="style.css" >
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+    <title>Chat App</title>
+  </head>
 
-</dev>
-<dev id="right_side">
-  <label for="">Фильтр</label>
-  <select>
-    <option value="Повара">Повара</option>
-    <option value="Официанты">Официанты</option>
-    <option value="Кондитер">Кондитер</option>
-  </select>
-  <ul id="users">
-    {{#each this.users}}
-    <li>{{userName}}</li>
-    {{/each}}
-  </ul>
-</dev>
-<dev id="left_side">
-
-</dev>
-
-<body>
+  <body>
     <header>
       <h1>Чат</h1>
     </header>
@@ -44,3 +35,4 @@
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
     <script src="chat.js"></script>
   </body>
+</html>
