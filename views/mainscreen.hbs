@@ -1,0 +1,32 @@
+<dev id="right_side">
+  <button>Новый сотрудник</button>
+  <label for="">Фильтр</label>
+  <select>
+    <option value="Повара">Повара</option>
+    <option value="Официанты">Официанты</option>
+    <option value="Кондитер">Кондитер</option>
+  </select>
+  <ul id="users">
+    {{#each this.users}}
+    <li>{{userName}}</li>
+    {{/each}}
+  </ul>
+</dev>
+<dev id="left_side">
+  <dev id="toolbar">
+    <label for="">Месяц</label>
+    <select>
+      <option value="Повара">Январь</option>
+      <option value="Официанты">Февраль</option>
+      <option value="Кондитер">Март</option>
+    </select>
+
+    <label for="">Ресторан</label>
+    <select>
+      <option value="Повара">Ресторан-1</option>
+      <option value="Официанты">Ресторан-2</option>
+      <option value="Кондитер">Ресторан-3</option>
+    </select>
+  </dev>
+
+</dev>

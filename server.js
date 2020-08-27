@@ -3,16 +3,16 @@ const session = require('express-session')
 const app = express()
 
 const mongoose = require("mongoose");
-mongoose.connect('mongodb://localhost:27017/broccoli', {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-});
+const cookieParser = require('cookie-parser');
+const db = require('./db');
+const User = require('./models/user');
 
 app.set('view engine', 'hbs');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
+app.use(cookieParser());
 app.use(express.static('public'));
 
 app.use(session({ //библиотека express-session - мидлвер для сессий
@@ -22,10 +22,31 @@ app.use(session({ //библиотека express-session - мидлвер для
   cookie: { expires: 6000000 }
 }));
 
-
-
 app.listen(3333, () => {
   console.log('work 3333');
 })
 
-module.exports = app
+app.get('/', (req, res) => {
+  res.render('signin');
+});
+
+app.post('/admin', async (req, res) => {
+  const { email, password } = req.body;
+  const findUser = await User.findOne({ email });
+  if (findUser) {
+    if (findUser.password === password) {
+      req.session.user = findUser;
+      const users = await User.find();
+      res.render('mainscreen', { users });
+    }
+  } else {
+    res.redirect('/');
+  }
+});
+
+// app.get('/user/:id'), (res, req) => {
+
+// });
+
+
+
