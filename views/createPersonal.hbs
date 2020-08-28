@@ -1,22 +1,32 @@
-<h1>Создание нового пользователя</h1>
-<h3>{{this.message}}</h3>
-<form action="/user/new" method="post">
-  <label for="role">Роль:</label>
-  <input type="text" name="role" id="role" value="{{role}}">
+<h1 style="text-align: center">Создание нового пользователя</h1>
+<div class="new_container">
+    <div>
+      <form action="/user/new" method="post">
+        <label for="role">Роль:</label>
+        <input type="text" name="role" id="role" value="{{role}}">
+    </div>
+    <div>
+      <label for="name">Имя:</label>
+      <input type="text" name="userName" id="name" value="{{userName}}">
+    </div>
+    <div>
+      <label for="email">Email:</label>
+      <input type="text" name="email" id="email" value="{{email}}">
+    </div>
+    <div>
+      <label for="profession">Профессия:</label>
+      <input type="text" name="profession" id="profession" value="{{profession}}">
+    </div>
+    <div>
+      <label for="password">Пароль:</label>
+      <input type="password" name="password" id="password" value="{{password}}">
+    </div>
+    <div>
+      <label for="password">Подтверждение пароля:</label>
+      <input type="password" name="confirmation" id="confirmation" value="{{password}}">
+    </div>
+    <button>Отправить</button>
+    </form>
+  </div>
+</div>
 
-  <label for="name">Имя:</label>
-  <input type="text" name="userName" id="name" value="{{userName}}">
-
-  <label for="email">Email:</label>
-  <input type="text" name="email" id="email" value="{{email}}">
-
-  <label for="profession">Профессия:</label>
-  <input type="text" name="profession" id="profession" value="{{profession}}">
-
-  <label for="password">Пароль:</label>
-  <input type="password" name="password" id="password" value="{{password}}">
-
-  <label for="password">Подтверждение пароля:</label>
-  <input type="password" name="confirmation" id="confirmation" value="{{password}}">
-  <button>Отправить</button>
-</form>
