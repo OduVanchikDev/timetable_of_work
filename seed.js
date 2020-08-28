@@ -16,18 +16,21 @@ db
         userName: 'Наставшев Юрий Валерьевич',
         email: 'Nastavshev_yuriy@mail.ru',
         password: '123',
+        profession: 'Повар',
       },
       {
         role: 'Сотрудник',
         userName: 'Асимова Виктория Николаевна',
         email: 'Asimova@mail.ru',
         password: '123',
+        profession: 'Повар',
       },
       {
         role: 'Сотрудник',
         userName: 'Иванов Иван Иванович',
         email: 'Ivanov@mail.ru',
         password: '123',
+        profession: 'Кондитер',
       },
     ]);
     disconnect();

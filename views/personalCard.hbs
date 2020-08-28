@@ -1,26 +1,36 @@
 <div>
-  <h1>{{userName}}</h1>
-  <p>{{role}}</p>
-  <p>{{email}}</p>
-  <p>{{password}}</p>
+  <h1>Имя: {{this.user.userName}}</h1>
+  <p>Роль: {{this.user.role}}</p>
+  <p>Email: {{this.user.email}}</p>
+  <p>Пароль: {{this.user.password}}</p>
+  <p>Профессия: {{this.user.profession}}</p>
 
+  <h3>Поменяться сменами</h3>
   <form action="">
     <select name="place" id="">
-      {{#each this.place}}
-      <option value="{{place}}">{{place}}</option>
-      {{/each}}
+      {{!-- {{#each this.place}} --}}
+      <option value="{{place}}">'place-1'{{place}}</option>
+      <option value="{{place}}">'place-2'{{place}}</option>
+      <option value="{{place}}">'place-3'{{place}}</option>
+      <option value="{{place}}">'place-4'{{place}}</option>
+      {{!-- {{/each}} --}}
     </select>
 
     <select name="date" id="">
-      {{#each this.date}}
-      <option value="{{date}}">{{date}}</option>
-      {{/each}}
+      {{!-- {{#each this.date}} --}}
+      <option value="{{date}}">'date-1'{{date}}</option>
+      <option value="{{date}}">'date-2'{{date}}</option>
+      <option value="{{date}}">'date-3'{{date}}</option>
+      <option value="{{date}}">'date-4'{{date}}</option>
+      {{!-- {{/each}} --}}
     </select>
 
     <select name="user" id="">
-      {{#each this.user}}
-      <option value="{{user}}">{{user}}</option>
+      {{#each this.coWorkers}}
+      <option>Выбор сотрудника</option>
+      <option value="{{this.userName}}">{{this.userName}}</option>
       {{/each}}
     </select>
+    <button>Подтвердить</button>
   </form>
 </div>

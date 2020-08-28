@@ -1,11 +1,15 @@
 <div id="right_side">
+  {{#if flagSudo}}
   <form action="/user/new" method="get">
     <button>Новый сотрудник</button>
   </form>
-  <label for="">Фильтр</label>
-  <select>
-    <option value="Повара">Повара</option>
-    <option value="Официанты">Официанты</option>
+  {{/if}}
+  {{!-- <label for="filter">Фильтр</label> --}}
+  <select id="filter">
+    <option value="Фильтр">Фильтр</option>
+    <option value="Все">Все</option>
+    <option value="Повар">Повар</option>
+    <option value="Официант">Официант</option>
     <option value="Кондитер">Кондитер</option>
   </select>
   <ul id="users">
@@ -29,7 +33,9 @@
       <option value="Официанты">Ресторан-2</option>
       <option value="Кондитер">Ресторан-3</option>
     </select>
-    <button>{{this.person.userName}}</button>
+    <form action="/personalCard">
+      <button name="user" id="{{this.person._id}}">{{this.person.userName}}</button>
+    </form>
   </div>
 
 </div>
