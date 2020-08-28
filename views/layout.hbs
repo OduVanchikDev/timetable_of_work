@@ -1,22 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="style.css" >
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="/socket.io/socket.io.js"></script>
-    <script>
-      $(function(){
-        const socket = io.connect()
-      })
-    </script>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css">
+  <link rel="stylesheet" type="text/css" href="/style.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script>
+    $(function () {
+      const socket = io.connect()
+    })
+  </script>
   <title>ZZZZZZZZZ</title>
 </head>
+
 <body>
   {{{body}}}
+
+  <header>
+    <h1>Чат</h1>
+  </header>
+
+  {{!-- <section>
+    <div id="change_username">
+      <input id="username" type="text" />
+      <button id="send_username" type="button">Изменить имя пользователя</button>
+    </div>
+  </section> --}}
+  <div style="display: none;" id="user-info">{{user._id}}</div>
+  <div id="user-info" style="display: none;">{{user.userName}}</div>
+  <section id="chatroom">
+    <section id="feedback"></section>
+  </section>
+
+
+
+  <section id="input_zone">
+    <input id="message" class="vertical-align" type="text" />
+    <button id="send_message" class="vertical-align" type="button">Отправаить</button>
+  </section>
+
+  <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+  <script src="/chat.js"></script>
+
+
+
 </body>
+
 </html>

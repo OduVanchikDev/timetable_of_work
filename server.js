@@ -2,9 +2,6 @@ const express = require('express')
 const app = express()
 const session = require('express-session')
 
-
-
-
 const mongoose = require("mongoose");
 const path = require('path');
 const cookieParser = require('cookie-parser');
@@ -28,6 +25,7 @@ app.use(session({ //библиотека express-session - мидлвер для
 
 function checkSession(req, res, next) {
   if (req.session.user) {
+    res.locals.user = req.session.user
     next();
   } else {
     res.render('signin');
@@ -50,53 +48,119 @@ app.get('/user/:id', checkSession, async (req, res) => {
 });
 
 app.post('/user', async (req, res) => {
-  const { email, password } = req.body;
+  const { role, email, password } = req.body;
   const findUser = await User.findOne({ email });
   if (findUser) {
-    if (findUser.password === password) {
+    if (findUser.password === password && findUser.role === role) {
       const { id } = findUser;
       req.session.user = findUser;
       res.redirect(`/user/${id}`);
+    } else {
+      res.render('signin', { message: 'Неправильно выбрана роль или пароль!!!!!!' });
     }
   } else {
-    res.redirect('/');
+    res.render('signin', { message: 'Неправильно введен логин или пароль!!!!!!' });
   }
 });
 
 
 app.post('/user/new', async (req, res) => {
   const {
-    role, userName, email, password,
+    role, userName, email, profession, password,
   } = req.body;
   await User.insertMany({
     role,
     userName,
     email,
+    profession,
     password,
   });
   res.redirect('/');
 });
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const server = app.listen(3333, () => {
   console.log('work 3333');
 })
-
 const io = require("socket.io")(server);
-
-io.on('connection', (socket) => {
-  console.log('New user connected')
-
-  socket.username = "Anonymous"
-
-  socket.on('change_username', (data) => {
-    socket.username = data.username
+io.on('connection', async (socket) => {
+  // console.log('New user connected')
+ 
+  // socket.username = "Anonymous"
+ 
+  // socket.on('change_username', (data) => {
+  //   socket.username = data.username
+  //   console.log(socket.username);
+  // })
+  socket.on('new_message', async (data) => {
+    const userId = data.userID;
+    const userDataBase = await User.findOne({_id: userId })
+    userDataBase.message.push(data.message);
+    await userDataBase.save()
+    // отправка в клиентский
+    io.sockets.emit('add_mess', { message: data.message, username: userDataBase.userName, className: data.className });
   })
-
-  socket.on('new_message', (data) => {
-    io.sockets.emit('add_mess', { message: data.message, username: socket.username, className: data.className });
-  })
-
-  socket.on('typing', (data) => {
-    socket.broadcast.emit('typing', { username: socket.username })
-  })
+  // socket.on('typing', (data) => {
+  //    // отправка всем клиентам, кроме отправителя
+  //   socket.broadcast.emit('typing', { username: socket.username })
+  //     // io.to(socketId).emit('hey', 'I just met you');
+  // })
 })

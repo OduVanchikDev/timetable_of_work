@@ -12,7 +12,7 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    // required: true,
+    required: true,
     unique: true,
   },
   password: {
@@ -25,9 +25,11 @@ const UserSchema = new Schema({
   }],
   profession: String,
   working: { type: Boolean, default: false },
+  message: [String],
 });
 
 // const UserModel = mongoose.model('User', UserSchema);
 // export default UserModel;
 
 module.exports = model('User', UserSchema);
+

@@ -7,11 +7,13 @@ $(function() {
   let chatroom = $("#chatroom");
   let feedback = $("#feedback");
   let message = $("#message");
-
+let user = $("#user-info").text();
+console.log(user)
   send_message.click(() => {
     socket.emit("new_message", {
       message: message.val(),
-      className: alertClass
+      className: alertClass,
+      userID : user
     });
   });
   let min = 1;
