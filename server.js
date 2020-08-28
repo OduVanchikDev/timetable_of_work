@@ -1,6 +1,6 @@
-const express = require("express");
-const session = require("express-session");
-const app = express();
+const express = require('express')
+const app = express()
+const session = require('express-session')
 
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 
 function checkSession(req, res, next) {
   if (req.session.user) {
+    res.locals.user = req.session.user
     next();
   } else {
     res.render("signin");
@@ -128,6 +129,37 @@ app.post('/user/new', async (req, res) => {
   }
 });
 
-app.listen(3333, () => {
+
+app.get('/days/:id', (req, res) => {
+  let workDays = [2, 5, 9]
+  res.json(workDays)
+})
+
+
+const server = app.listen(3333, () => {
   console.log('work 3333');
-});
+})
+const io = require("socket.io")(server);
+io.on('connection', async (socket) => {
+  // console.log('New user connected')
+ 
+  // socket.username = "Anonymous"
+ 
+  // socket.on('change_username', (data) => {
+  //   socket.username = data.username
+  //   console.log(socket.username);
+  // })
+  socket.on('new_message', async (data) => {
+    const userId = data.userID;
+    const userDataBase = await User.findOne({_id: userId })
+    userDataBase.message.push(data.message);
+    await userDataBase.save()
+    // отправка в клиентский
+    io.sockets.emit('add_mess', { message: data.message, username: userDataBase.userName, className: data.className });
+  })
+  // socket.on('typing', (data) => {
+  //    // отправка всем клиентам, кроме отправителя
+  //   socket.broadcast.emit('typing', { username: socket.username })
+  //     // io.to(socketId).emit('hey', 'I just met you');
+  // })
+})
