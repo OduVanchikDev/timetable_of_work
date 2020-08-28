@@ -1,6 +1,13 @@
-<dev id="right_side">
-  <button>Новый сотрудник</button>
-  <label for="">Фильтр</label>
+
+<div class="header">
+  <h3>Менеджер персонала</h3>
+</div>
+
+<div class="box_filter">
+  <form action="/user/new" method="get">
+     <button id="new_person">Новый сотрудник</button>
+  </form>
+
   <select>
     <option value="Повара">Повара</option>
     <option value="Официанты">Официанты</option>
@@ -11,9 +18,9 @@
     <li>{{userName}}</li>
     {{/each}}
   </ul>
-</dev>
-<dev id="left_side">
-  <dev id="toolbar">
+</div>
+
+<div class="changer">
     <label for="">Месяц</label>
     <select>
       <option value="Повара">Январь</option>
@@ -27,6 +34,9 @@
       <option value="Официанты">Ресторан-2</option>
       <option value="Кондитер">Ресторан-3</option>
     </select>
-  </dev>
+    <button>{{this.person.userName}}</button>
+  </div>
 
-</dev>
+</div>
+ 
+

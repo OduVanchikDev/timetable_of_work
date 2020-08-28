@@ -1,0 +1,21 @@
+<h1>Создание нового пользователя</h1>
+<form action="/user/new" method="post">
+  <label for="role">Роль:</label>
+  <input type="text" name="role" id="role" value="{{role}}">
+
+  <label for="name">Имя:</label>
+  <input type="text" name="userName" id="name" value="{{userName}}">
+
+  <label for="email">Email:</label>
+  <input type="text" name="email" id="email" value="{{email}}">
+
+  <label for="profession">Профессия:</label>
+  <input type="text" name="profession" id="profession" value="{{profession}}">
+
+  <label for="password">Пароль:</label>
+  <input type="text" name="password" id="password" value="{{password}}">
+
+  <label for="password">Подтверждение пароля:</label>
+  <input type="text" name="confirmation" id="confirmation" value="{{password}}">
+  <button>Отправить</button>
+</form>
