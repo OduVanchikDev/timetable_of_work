@@ -1,4 +1,5 @@
 <h1>Создание нового пользователя</h1>
+<h3>{{this.message}}</h3>
 <form action="/user/new" method="post">
   <label for="role">Роль:</label>
   <input type="text" name="role" id="role" value="{{role}}">
@@ -13,9 +14,9 @@
   <input type="text" name="profession" id="profession" value="{{profession}}">
 
   <label for="password">Пароль:</label>
-  <input type="text" name="password" id="password" value="{{password}}">
+  <input type="password" name="password" id="password" value="{{password}}">
 
   <label for="password">Подтверждение пароля:</label>
-  <input type="text" name="confirmation" id="confirmation" value="{{password}}">
+  <input type="password" name="confirmation" id="confirmation" value="{{password}}">
   <button>Отправить</button>
 </form>

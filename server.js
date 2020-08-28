@@ -25,9 +25,13 @@ app.use(
   })
 );
 
-app.listen(3333, () => {
-  console.log("work 3333");
+app.use((req, res, next) => {
+  if (req.session.user) {
+    res.locals.user = req.session.user;
+  }
+  next();
 });
+
 function checkSession(req, res, next) {
   if (req.session.user) {
     next();
@@ -40,16 +44,36 @@ app.get("/", (req, res) => {
   res.render("signin");
 });
 
-app.get("/user/new", (req, res) => {
-  res.render("createPersonal");
+app.get('/user/new', (req, res) => {
+  if (req.session.user.role === 'Менеджер') {
+    res.render('createPersonal');
+  }
 });
 
 app.get("/user/:id", checkSession, async (req, res) => {
   const { id } = req.params;
-  const users = await User.find();
+  const prof = req.query.filter;
   const person = await User.findOne({ _id: id });
-  res.render("mainscreen", { users, person });
+  let flagSudo = false;
+  if (person.role === 'Менеджер') {
+    flagSudo = true;
+  }
+  if (prof === 'Все') {
+    const users = await User.find();
+    res.render('mainscreen', { users, person, flagSudo });
+  } else {
+    const users = await User.find({ profession: prof });
+    res.render('mainscreen', { users, person, flagSudo });
+  }
 });
+// let getList = [];
+// app.post('/user/filter', async (req, res) => {
+//   const filterOut = req.body.filter;
+//   const id = req.session.user._id;
+//   getList = await User.find({ profession: filterOut });
+//   // res.render('mainscreen', { users });
+//   res.redirect(`/user/${id}`);
+// });
 
 app.post("/user", async (req, res) => {
   const { role, email, password } = req.body;
@@ -71,14 +95,39 @@ app.post("/user", async (req, res) => {
   }
 });
 
-app.post("/user/new", async (req, res) => {
-  const { role, userName, email, profession, password } = req.body;
-  await User.insertMany({
-    role,
-    userName,
-    email,
-    profession,
-    password,
+app.get('/personalCard', checkSession, async (req, res) => {
+  const user = await User.findOne({ _id: req.session.user._id });
+  let coWorkers = await User.find({ profession: req.session.user.profession });
+  coWorkers.map(item => {
+    if (item._id == req.session.user._id) {
+      coWorkers = coWorkers.splice(item, 1);
+    }
+    return coWorkers;
   });
-  res.redirect("/");
+  res.render('personalCard', { user, coWorkers });
+});
+
+app.post('/user/new', async (req, res) => {
+  const {
+    role, userName, email, profession, password, confirmation,
+  } = req.body;
+  const double = await User.findOne({ email });
+  if (password !== confirmation) {
+    res.render('createPersonal', { message: 'Неправильно введен пароль' });
+  } else if (double) {
+    res.render('createPersonal', { message: 'Email уже существует!!!' });
+  } else {
+    await User.insertMany({
+      role,
+      userName,
+      email,
+      profession,
+      password,
+    });
+    res.redirect(`/user/${req.session.user._id}`);
+  }
+});
+
+app.listen(3333, () => {
+  console.log('work 3333');
 });
