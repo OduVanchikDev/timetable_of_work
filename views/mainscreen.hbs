@@ -1,8 +1,15 @@
-<div id="right_side">
+
   {{#if flagSudo}}
+
+<div class="header">
+  <h3>Менеджер персонала</h3>
+</div>
+
+<div class="box_filter">
   <form action="/user/new" method="get">
-    <button>Новый сотрудник</button>
+     <button id="new_person">Новый сотрудник</button>
   </form>
+
   {{/if}}
   {{!-- <label for="filter">Фильтр</label> --}}
   <select id="filter">
@@ -18,8 +25,8 @@
     {{/each}}
   </ul>
 </div>
-<div id="left_side">
-  <div id="toolbar">
+
+<div class="changer">
     <label for="">Месяц</label>
     <select>
       <option value="Повара">Январь</option>
@@ -39,3 +46,4 @@
   </div>
 
 </div>
+

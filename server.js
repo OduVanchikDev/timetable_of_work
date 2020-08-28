@@ -1,27 +1,29 @@
-const express = require('express')
-const app = express()
-const session = require('express-session')
+const express = require("express");
+const session = require("express-session");
+const app = express();
 
 const mongoose = require("mongoose");
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const db = require('./db');
-const User = require('./models/user');
+const cookieParser = require("cookie-parser");
+const db = require("./db");
+const User = require("./models/user");
 
-app.set('view engine', 'hbs');
+app.set("view engine", "hbs");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 app.use(cookieParser());
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.use(session({ //библиотека express-session - мидлвер для сессий
-  secret: 'dfgiodhgosjgopsjgpowejf345345',
-  resave: false,
-  saveUninitialized: false,
-  cookie: { expires: 6000000 },
-}));
+app.use(
+  session({
+    //библиотека express-session - мидлвер для сессий
+    secret: "dfgiodhgosjgopsjgpowejf345345",
+    resave: false,
+    saveUninitialized: false,
+    cookie: { expires: 6000000 },
+  })
+);
 
 app.use((req, res, next) => {
   if (req.session.user) {
@@ -34,12 +36,12 @@ function checkSession(req, res, next) {
   if (req.session.user) {
     next();
   } else {
-    res.render('signin');
+    res.render("signin");
   }
 }
 
-app.get('/', (req, res) => {
-  res.render('signin');
+app.get("/", (req, res) => {
+  res.render("signin");
 });
 
 app.get('/user/new', (req, res) => {
@@ -48,7 +50,7 @@ app.get('/user/new', (req, res) => {
   }
 });
 
-app.get('/user/:id', checkSession, async (req, res) => {
+app.get("/user/:id", checkSession, async (req, res) => {
   const { id } = req.params;
   const prof = req.query.filter;
   const person = await User.findOne({ _id: id });
@@ -73,7 +75,7 @@ app.get('/user/:id', checkSession, async (req, res) => {
 //   res.redirect(`/user/${id}`);
 // });
 
-app.post('/user', async (req, res) => {
+app.post("/user", async (req, res) => {
   const { role, email, password } = req.body;
   const findUser = await User.findOne({ email });
   if (findUser) {
@@ -82,10 +84,14 @@ app.post('/user', async (req, res) => {
       req.session.user = findUser;
       res.redirect(`/user/${id}`);
     } else {
-      res.render('signin', { message: 'Неправильно выбрана роль или пароль!!!!!!' });
+      res.render("signin", {
+        message: "Неправильно выбрана роль или пароль!!!!!!",
+      });
     }
   } else {
-    res.render('signin', { message: 'Неправильно введен логин или пароль!!!!!!' });
+    res.render("signin", {
+      message: "Неправильно введен логин или пароль!!!!!!",
+    });
   }
 });
 
